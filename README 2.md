@@ -1,6 +1,8 @@
-# Project Name
+FullStack Fat Join Table - Informtion and Maps Module
 
-> Project description
+> Project description:
+This project will be a recreation of a individual restaurant webpage on www.opentable.com.
+This module is solely focused on the about and maps portion of the actual opentable website.
 
 ## Related Projects
 
