@@ -15,11 +15,13 @@
     ]
   },
   "scripts": {
-    "start": "webpack-dev-server --progress --colors --config ./webpack.config.js"
+    "start": "webpack-dev-server --progress --colors --config ./webpack.config.js",
+    "server-dev": "nodemon server/index.js"
   },
   "dependencies": {
     "express": "^4.16.2",
     "mongoose": "^5.0.6",
+    "nodemon": "^1.15.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   },
