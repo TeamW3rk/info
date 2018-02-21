@@ -6,10 +6,11 @@ This module is solely focused on the about and maps portion of the actual openta
 
 ## Related Projects
 
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
+  - https://github.com/fullstack-flapjacks/Menu-Module
+  - https://github.com/fullstack-flapjacks/suggested-restaurants
+  - https://github.com/fullstack-flapjacks/About_Map_Info-module
+  - https://github.com/fullstack-flapjacks/review-service
+  - https://github.com/fullstack-flapjacks/reservation-widget
 
 ## Table of Contents
 
