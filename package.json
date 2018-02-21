@@ -18,6 +18,8 @@
     "start": "webpack-dev-server --progress --colors --config ./webpack.config.js"
   },
   "dependencies": {
+    "express": "^4.16.2",
+    "mongoose": "^5.0.6",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   },
