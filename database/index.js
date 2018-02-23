@@ -59,7 +59,12 @@ let informationSchema = mongoose.Schema({
     description: String
   },
   specialEvents: String, 
-  promotions: String
+  promotions: String,
+  rating: String,
+  reviews: String,
+  topTags: Array,
+  description: String,
+  neighborhood: String
 });
 
 let Information = mongoose.model('Information', informationSchema);
@@ -126,7 +131,12 @@ let save = (data) => {
         description: item.additional.description
       },
       specialEvents: item.specialEvents, 
-      promotions: item.promotions
+      promotions: item.promotions,
+      rating: item.rating,
+      reviews: item.reviews,
+      topTags: item.topTags,
+      description: item.description,
+      neighborhood: item.neighborhood
     });
 
     restaurantLocation.save((err) => {
@@ -141,7 +151,7 @@ let save = (data) => {
 //invocation of the save function to populate the database
 
 //***UNCOMMENT FUNCTION TO POPULATE THE DB WITH NODE***
-// save(data); 
+save(data); 
 
 //define a find function so we can make queries to the database to find location items
 let findLocation = (id, callback) => {

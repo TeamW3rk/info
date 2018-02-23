@@ -34,6 +34,30 @@ let priceRange = () => {
   return `$${min} - $${max}`;
 };
 
+//ratings generator
+let ratings = () => {
+  return `${(Math.random() * (5 - 0 + 1)).toFixed(1)}`;
+}
+
+//reviews generator
+let reviews = () => {
+  let numberOfReviews = Math.floor(Math.random() * 10000);
+  return `${numberOfReviews}`;
+}
+
+//create top tags for the widget => data structure will be an array
+let topTags = () => {
+  let existingTags = [`family`, `bored`, `unproductive`, `selfish`, `snoring`, `loud`, `coffee`, `southern`, `jackfruit`];
+  let randomNumber1 = Math.floor(Math.random() * 999) + 1;
+  let randomNumber2 = Math.floor(Math.random() * 999) + 1;
+  let randomNumber3 = Math.floor(Math.random() * 999) + 1;
+  let generateRandomIndex1 = Math.floor(Math.random() * 8);
+  let generateRandomIndex2 = Math.floor(Math.random() * 8);
+  let generateRandomIndex3 = Math.floor(Math.random() * 8);
+  let tags = [`${existingTags[generateRandomIndex1]}(${randomNumber1})`, `${existingTags[generateRandomIndex2]}(${randomNumber2})`, `${existingTags[generateRandomIndex3]}(${randomNumber3})`];
+  return tags;
+}
+
 //function to create mock data. Will make 200 instances of the same schema and insert it into the database
 //generate the actual data
 let generateMockData = () => {
@@ -91,7 +115,12 @@ let generateMockData = () => {
         description: faker.lorem.paragraph()
       },
       specialEvents: faker.lorem.paragraph(), 
-      promotions: faker.lorem.paragraph()
+      promotions: faker.lorem.paragraph(),
+      rating: ratings(),
+      reviews: reviews(),
+      topTags: topTags(),
+      description: faker.lorem.paragraph(),
+      neighborhood: faker.lorem.words()
     });
     idCount++;
   }
