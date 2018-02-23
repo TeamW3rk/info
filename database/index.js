@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const faker = require('faker');  //faker will be used to generate dummy data
 const dataGenerator = require('./dataGenerator.js');
+const requests = require('../server/requests.js');
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/restaurants');
 // , {useMongoClient: true}
@@ -137,8 +138,11 @@ let save = (data) => {
     });
   });
 }
-
 //invocation of the save function to populate the database
 save(data);
 
+//define a find function so we can make queries to the database to find items
+let find = () => {};
+
 module.exports.save = save;
+module.exports.find = find;
