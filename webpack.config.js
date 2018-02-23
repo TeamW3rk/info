@@ -27,6 +27,7 @@ module.exports = {
     ],
     devServer: {
       contentBase: './client',
+      port: 1127,
       hot: true
     }
   };
