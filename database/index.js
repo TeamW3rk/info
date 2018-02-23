@@ -139,10 +139,26 @@ let save = (data) => {
   });
 }
 //invocation of the save function to populate the database
-save(data);
 
-//define a find function so we can make queries to the database to find items
-let find = () => {};
+//***UNCOMMENT FUNCTION TO POPULATE THE DB WITH NODE***
+// save(data); 
 
+//define a find function so we can make queries to the database to find location items
+let findLocation = (id, callback) => {
+  //will send a query to the database to retrieve the item with the cooresponding id 
+  db.locations.find({restaurant_id: id}, (error, item) => {
+    if (error) throw error;
+    callback(item);
+  });
+};
+
+//define a find function so we can make queries to the database to find about items
+let findInformation = (id, callback) => {
+  db.information.find({restaurant_id: id}, (error, item) => {
+    if (error) throw error;
+    callback(item);
+  });
+}
 module.exports.save = save;
-module.exports.find = find;
+module.exports.findLocation = findLocation;
+module.exports.findInformation = findInformation;

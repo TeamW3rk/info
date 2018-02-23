@@ -10,17 +10,9 @@ app.use(parser.json());
 
 //using the defined router 
 app.use('/', router);
+//all requests will be sent to the router to be directed to the correct endpoints
 
 app.use(express.static(__dirname + '/../client'));
-
-// app.get('/:restaurant_id/location', (req, res) => {
-//   res.send();
-// });
-
-// app.get('/:restaurant_id/about', (req,res) => {
-//   res.send();
-// });
-
 
 let port = 1127;
 
