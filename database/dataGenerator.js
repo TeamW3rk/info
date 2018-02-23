@@ -40,14 +40,15 @@ let generateMockData = () => {
   //data capsule
   let data = [];
   for (let i = 0; i < 200; i++) {
-    data.push({restaurant_id: idCount,
-       name: faker.company.companyName(),
-       latitude: latitude(),
-       longitude: longitude(),
-       diningStyle: faker.lorem.word(),
-       cuisines: faker.lorem.word(),
-       hoursOfOperations: {
-       breakfast: {
+    data.push({
+      restaurant_id: idCount,
+      name: faker.company.companyName(),
+      latitude: latitude(),
+      longitude: longitude(),
+      diningStyle: faker.lorem.word(),
+      cuisines: faker.lorem.word(),
+      hoursOfOperations: {
+      breakfast: {
          served : true,
          times: faker.lorem.words(),
          days: faker.lorem.words()
