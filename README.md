@@ -20,9 +20,9 @@ This module is solely focused on the about and maps portion of the actual openta
 
 ## Usage
 
-> Some usage instructions
 Start up MongoDB using "mongod" and "mongo" command in terminal in About_Map_Info-Module root diretory.
 From terminal, go in the database directory and run "node index.js" to populate the database with dummy data.
+To run Jest tests, run command "jest" from either the root directory or from the "__tests__" directory
 
 ## Requirements
 
