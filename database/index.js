@@ -71,7 +71,7 @@ let Information = mongoose.model('Information', informationSchema);
 
 //variable which will have the data in an array object with nested objects
 let data = dataGenerator.generateMockData();
-console.log(data);
+// console.log(data);
 
 let save = (data) => {
   data.forEach((item) => {
@@ -151,7 +151,7 @@ let save = (data) => {
 //invocation of the save function to populate the database
 
 //***UNCOMMENT FUNCTION TO POPULATE THE DB WITH NODE***
-save(data); 
+// save(data); 
 
 //define a find function so we can make queries to the database to find location items
 let findLocation = (id, callback) => {

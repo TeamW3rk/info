@@ -124,7 +124,7 @@ let generateMockData = () => {
     });
     idCount++;
   }
-  console.log(data);
+  // console.log(data);
   return data;
 };
 

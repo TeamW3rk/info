@@ -2,21 +2,24 @@
 const db = require('../database/index.js');
 
 module.exports = {
-  about: (req, res) => {
+  about: {
+    get: (req, res) => {
     //invoke func here to get data from the database 
     //to be sent back to client to be rendered
-    db.findInformation((error, item) => {
-      if (error) throw error;
-      res.send(item);
-    });
+      db.findInformation((error, item) => {
+        if (error) throw error;
+        res.send(item);
+      });
+    }
   },
-  location: (req, res) => {
+  location: {
+    get: (req, res) => {
     //invoke func here to get data from the database 
     //to be sent back to client to be rendered
-    db.findLocation((error, item) => {
-      if (error) throw error;
-      res.send(item);
-    });
+      db.findLocation((error, item) => {
+        if (error) throw error;
+        res.send(item);
+      });
+    }
   }
 }
-
