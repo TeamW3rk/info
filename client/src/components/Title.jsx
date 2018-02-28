@@ -4,7 +4,7 @@ import React from 'react';
 const Title = (props) => {
   console.log('this props is being passed down from the parent', props);
   return (
-  <div>{props.test}</div>
+    <p>ain't this some shit</p>
   )
 };
 
