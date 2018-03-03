@@ -4,7 +4,7 @@ import axios from 'axios';
 import bluebird from 'bluebird';
 import Description from './components/Description.jsx';
 import LeftAbout from './components/LeftAbout.jsx'
-import Map from './components/Map.jsx';
+import Maps from './components/Map.jsx';
 import Ratings from './components/Ratings.jsx';
 import RightAbout from './components/RightAbout.jsx';
 import Title from './components/Title.jsx';
@@ -14,8 +14,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      location: {},
-      restaurant: {}
+      restaurant: {}, 
+      isLoading: true
     };
     //this will be the object that will be taken from our database
     //this state will be passed to each of the child components so they can access 
@@ -32,10 +32,11 @@ class App extends React.Component {
     
     //this axios request will send a concurrent request to the server to get
     //information for both the about and location sections
-    axios.all([this.getInformation(randomId), this.getLocation(randomId)])
-      .then(axios.spread((information, location) => {
-        console.log(information, location);
-      }));
+    // axios.all([this.getInformation(randomId), this.getLocation(randomId)])
+    //   .then(axios.spread((information, location) => {
+    //     console.log(information, location);
+    //   }));
+    this.getInformation(randomId);
   }
 
   //send GET request to get the about information for the restaurant 
@@ -43,6 +44,11 @@ class App extends React.Component {
     axios.get(`/restaurant/${restaurant_id}/about`)
     .then((response) => {
       console.log(response);
+      this.setState({
+        restaurant: response.data,
+        isLoading: false
+      });
+      // console.log('this console log is from within the axios request success', this.state)
     })
     .catch((error) => {
       console.log(error);
@@ -50,38 +56,48 @@ class App extends React.Component {
   }
   
   //send GET request to get the location coordinates for the restaurant
-  getLocation(restaurant_id) {
-    axios.get(`/restaurant/${restaurant_id}/location`)
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  }
+  // getLocation(restaurant_id) {
+  //   axios.get(`/restaurant/${restaurant_id}/location`)
+  //   .then((response) => {
+  //     console.log(response);
+  //   })
+  //   .catch((error) => {
+  //     console.log(error);
+  //   });
+  // }
 
   //use native Component Will Mount to invoke the randomSearch function above before rendering
   componentWillMount() {
     this.randomSearch();
-    // this.setState({
-    //   location: ,
-    //   restaurant: 
-    // })
   }
 
   render() {
-    return (
-      <div>
-        <h1>FULLSTACK FAT JOINT BREH</h1>
-        <Title test={this.state.test} restaurant={this.state.restaurant}/>
-        <Ratings restaurant={this.state.restaurant} />
-        <TopTags restaurant={this.state.restaurant}/>
-        <Description restaurant={this.state.restaurant}/>
-        <LeftAbout restaurant={this.state.restaurant}/>
-        <Map restaurant={this.state.restaurant} location={this.state.location}/>
-        <RightAbout restaurant={this.state.restaurant}/>  
-      </div> 
-    )
+    if (this.state.isLoading) {
+      return (
+        <div>
+          <h1>This Page Is Currently Loading</h1>
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          <Title restaurant={this.state.restaurant}/>
+          <Ratings restaurant={this.state.restaurant} />
+          <TopTags restaurant={this.state.restaurant}/>
+          <Description restaurant={this.state.restaurant}/>
+          <div>
+            <table style={{marginTop: '15px', marginBottom: '15px', marginRight: '700px', marginLeft: '300px'}}>
+              <tbody>
+                <tr>
+                  <td style={{width: '70%'}}><LeftAbout restaurant={this.state.restaurant}/></td>
+                  <td><Maps restaurant={this.state.restaurant}/><RightAbout restaurant={this.state.restaurant}/></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div> 
+      )
+    }
   }
 }
 

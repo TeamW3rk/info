@@ -2,10 +2,12 @@ import React from 'react';
 
 //title section of the component
 const Title = (props) => {
-  console.log('this props is being passed down from the parent', props);
   return (
-    <p>ain't this some shit</p>
+    <div> 
+      <h1 style={{marginTop: '15px', marginBottom: '15px', marginRight: '700px', marginLeft: '300px', borderBottom: '1px solid black'}}>{props.restaurant.name}</h1>
+    </div>
   )
 };
+
 
 export default Title;

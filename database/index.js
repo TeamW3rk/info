@@ -6,41 +6,39 @@ mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/restaurants');
 // , {useMongoClient: true}
 //defining the location schema and data shape
-let locationSchema = mongoose.Schema({
-  restaurant_id: Number,
-  name: String,
-  latitude: String,
-  longitude: String
-});
+// let locationSchema = mongoose.Schema({
+//   restaurant_id: Number,
+//   name: String,
+//   latitude: String,
+//   longitude: String
+// });
 
-let Location = mongoose.model('location', locationSchema);
+// let Location = mongoose.model('location', locationSchema);
 
 let informationSchema = mongoose.Schema({
   restaurant_id: Number,
   name: String,
+  latitude: String,
+  longitude: String,
+  map: String, 
   diningStyle: String,
   cuisines: String,
   hoursOfOperations: {
-   breakfast: {
+   monday: {
      served : Boolean,
-     times: String,
-     days: String
+     lunch: String,
+     dinner: String
    },
-   brunch: {
-     Served: Boolean, 
-     times: String,
-     days: String
+   friday: {
+     served: Boolean, 
+     lunch: String,
+     dinner: String
    },
-   lunch: {
+   saturday: {
      served : Boolean,
-     times: String,
-     days: String
-   },
-   dinner: {
-     served : Boolean,
-     times: String,
-     days: String
-   } 
+     lunch: String,
+     dinner: String
+   }
   }, 
   crossStreet: String,
   dressCode: String,
@@ -64,7 +62,8 @@ let informationSchema = mongoose.Schema({
   reviews: String,
   topTags: Array,
   description: String,
-  neighborhood: String
+  neighborhood: String,
+  parking: String
 });
 
 let Information = mongoose.model('Information', informationSchema);
@@ -75,39 +74,37 @@ let data = dataGenerator.generateMockData();
 
 let save = (data) => {
   data.forEach((item) => {
-    let restaurantLocation = new Location({
-      id: item.restaurant_id,
-      name: item.name,
-      latitude: item.latitude,
-      longitude: item.longitude
-    });
+    // let restaurantLocation = new Location({
+    //   id: item.restaurant_id,
+    //   name: item.name,
+    //   latitude: item.latitude,
+    //   longitude: item.longitude
+    // });
 
     let restaurant = new Information({
       restaurant_id: item.restaurant_id,
-       name: item.name,
-       diningStyle: item.diningStyle,
-       cuisines: item.cuisines,
-       hoursOfOperations: {
-        breakfast: {
-          served : item.hoursOfOperations.breakfast.served,
-          times: item.hoursOfOperations.breakfast.times,
-          days: item.hoursOfOperations.breakfast.days
+      name: item.name,
+      latitude: item.latitude,
+      longitude: item.longitude,
+      map: item.map,
+      diningStyle: item.diningStyle,
+      cuisines: item.cuisines,
+      hoursOfOperations: {
+        monday: {
+          served : item.hoursOfOperations.monday.served,
+          lunch: item.hoursOfOperations.monday.lunch,
+          dinner: item.hoursOfOperations.monday.dinner
         },
-        brunch: {
-          served: item.hoursOfOperations.brunch.served, 
-          times: item.hoursOfOperations.brunch.times,
-          days: item.hoursOfOperations.brunch.days
+        friday: {
+          served: item.hoursOfOperations.friday.served, 
+          lunch: item.hoursOfOperations.friday.lunch,
+          dinner: item.hoursOfOperations.friday.dinner
         },
-        lunch: {
-          served : item.hoursOfOperations.lunch.served,
-          times: item.hoursOfOperations.lunch.times,
-          days: item.hoursOfOperations.lunch.days
-        },
-        dinner: {
-          served : item.hoursOfOperations.dinner.served,
-          times: item.hoursOfOperations.dinner.times,
-          days: item.hoursOfOperations.dinner.days
-        } 
+        saturday: {
+          served : item.hoursOfOperations.saturday.served,
+          lunch: item.hoursOfOperations.saturday.lunch,
+          dinner: item.hoursOfOperations.saturday.dinner
+        }
       }, 
       crossStreet: item.crossStreet,
       dressCode: item.dressCode,
@@ -136,12 +133,13 @@ let save = (data) => {
       reviews: item.reviews,
       topTags: item.topTags,
       description: item.description,
-      neighborhood: item.neighborhood
+      neighborhood: item.neighborhood,
+      parking: item.parking
     });
 
-    restaurantLocation.save((err) => {
-      if (err) return handleError(err);
-    });
+    // restaurantLocation.save((err) => {
+    //   if (err) return handleError(err);
+    // });
 
     restaurant.save((err) => {
       if (err) return handleError(err);
@@ -154,21 +152,42 @@ let save = (data) => {
 // save(data); 
 
 //define a find function so we can make queries to the database to find location items
-let findLocation = (id, callback) => {
-  //will send a query to the database to retrieve the item with the cooresponding id 
-  db.locations.find({restaurant_id: id}, (error, item) => {
-    if (error) throw error;
-    callback(item);
-  });
-};
+// let findLocation = (id, callback) => {
+//   //will send a query to the database to retrieve the item with the cooresponding id 
+//   db.locations.find({restaurant_id: id}, (error, item) => {
+//     if (error) throw error;
+//     callback(item);
+//   });
+// };
 
-//define a find function so we can make queries to the database to find about items
-let findInformation = (id, callback) => {
-  db.information.find({restaurant_id: id}, (error, item) => {
-    if (error) throw error;
-    callback(item);
-  });
+// //define a find function so we can make queries to the database to find about items
+// let findInformation = (id, callback) => {
+//   db.information.find({restaurant_id: id}, (error, item) => {
+//     if (error) throw error;
+//     callback(item);
+//   });
+// }
+
+//going to make each of these functions a method of an object
+module.exports = {
+  information: (id, callback) => {
+    //will send a query to the database to retrieve the item with the cooresponding id 
+    // let information = db.getCollection('locations');
+    Information.find({restaurant_id: id}, (err, item) => {
+      if (err) throw err;
+      callback(item);
+    });
+  }
+  // location: (id, callback) => {
+  //   // let location = db.getCollection('locations');
+  //   location.find({restaurant_id: id}, (error, item) => {
+  //     console.log("ITEM~~~~~~~~~~~~~~~~", item);
+  //     if (error) throw error;
+  //     callback(item);
+  //   });
+  // }
 }
-module.exports.save = save;
-module.exports.findLocation = findLocation;
-module.exports.findInformation = findInformation;
+
+// module.exports.save = save;
+// module.exports.findLocation = findLocation;
+// module.exports.findInformation = findInformation;

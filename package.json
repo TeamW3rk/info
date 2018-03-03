@@ -15,7 +15,7 @@
     ]
   },
   "scripts": {
-    "start": "webpack-dev-server --progress --colors --config ./webpack.config.js",
+    "start": "webpack -w",
     "server-dev": "nodemon server/index.js",
     "test": "jest"
   },
@@ -28,7 +28,8 @@
     "mongoose": "^5.0.6",
     "nodemon": "^1.15.1",
     "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react-dom": "^16.2.0",
+    "react-iframe": "^1.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -37,6 +38,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
+    "css-loader": "^0.28.10",
     "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
     "jest": "^22.4.2",
     "react-hot-loader": "^3.1.3",
