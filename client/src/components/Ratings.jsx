@@ -7,10 +7,14 @@ const Ratings = (props) => {
       <table style={{cellpadding: '50', marginTop: '15px', marginBottom: '15px', marginRight: '700px', marginLeft: '300px'}}>
         <tbody>
           <tr>
-            <td style={{fontWeight: 'bold', fontSize: '14px', padding: '4px'}}>ratings: {props.restaurant.rating}</td>
+            <td><img src='https://toyotaescondido.files.wordpress.com/2012/04/5_stars1.jpg' style={{width: '80px', height: '20px'}}></img></td>
+            <td style={{fontWeight: 'bold', fontSize: '14px', padding: '4px'}}>{props.restaurant.rating}</td>
+            <td><img src='http://cdn.osxdaily.com/wp-content/uploads/2014/11/mac-messages-icon-300x276.jpg' style={{width: '20px', height: '20px'}}></img></td>
             <td style={{fontWeight: 'bold', fontSize: '14px', padding: '4px'}}>{props.restaurant.reviews} reviews</td>
-            <td style={{fontWeight: 'bold', fontSize: '14px', padding: '4px'}}>price range: {props.restaurant.priceRange}</td>
-            <td style={{fontWeight: 'bold', fontSize: '14px', padding: '4px'}}>cuisines: {props.restaurant.cuisines}</td>
+            <td><img src='https://image.flaticon.com/icons/svg/631/631200.svg' style={{width: '20px', height: '20px'}}></img></td>
+            <td style={{fontWeight: 'bold', fontSize: '14px', padding: '4px'}}>{props.restaurant.priceRange}</td>
+            <td><img src='https://image.flaticon.com/icons/svg/0/97.svg' style={{width: '20px', height: '20px'}}></img></td>
+            <td style={{fontWeight: 'bold', fontSize: '14px', padding: '4px'}}>{props.restaurant.cuisines}</td>
           </tr>
         </tbody>
       </table>
