@@ -30,14 +30,15 @@ class App extends React.Component {
   //this will generate a random id number between 1-200 and will render the page initially
   randomSearch() {
     let randomId = Math.floor(Math.random() * (200 - 1)) + 1;
-    
+    let path = window.location.pathname;
+    let id = path.split('/');
     //this axios request will send a concurrent request to the server to get
     //information for both the about and location sections
     // axios.all([this.getInformation(randomId), this.getLocation(randomId)])
     //   .then(axios.spread((information, location) => {
     //     console.log(information, location);
     //   }));
-    this.getInformation(randomId);
+    this.getInformation(parseInt(id[2]));
   }
 
   //send GET request to get the about information for the restaurant 
