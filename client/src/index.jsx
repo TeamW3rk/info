@@ -15,7 +15,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       restaurant: {}, 
-      isLoading: true
+      isLoading: true,
+      readmore: false //readmore button not toggled
     };
     //this will be the object that will be taken from our database
     //this state will be passed to each of the child components so they can access 
@@ -46,7 +47,7 @@ class App extends React.Component {
       console.log(response);
       this.setState({
         restaurant: response.data,
-        isLoading: false
+        isLoading: false, 
       });
       // console.log('this console log is from within the axios request success', this.state)
     })
@@ -71,6 +72,24 @@ class App extends React.Component {
     this.randomSearch();
   }
 
+  //will rerender the description when clicked
+  readMore() {
+    if (this.state.readmore === false) {
+      this.setState(prevState => ({
+        readmore: !prevState.readmore
+      }));
+    } 
+  }
+
+  //will rerender the description when clicked 
+  readLess() {
+    if (this.state.readmore === true) {
+      this.setState(prevState => ({
+        readmore: !prevState.readmore
+      }));
+    }
+  }
+
   render() {
     if (this.state.isLoading) {
       return (
@@ -84,7 +103,7 @@ class App extends React.Component {
           <Title restaurant={this.state.restaurant}/>
           <Ratings restaurant={this.state.restaurant} />
           <TopTags restaurant={this.state.restaurant}/>
-          <Description restaurant={this.state.restaurant}/>
+          <Description restaurant={this.state.restaurant} readMore={this.readMore.bind(this)} readLess={this.readLess.bind(this)} toggled={this.state.readmore}/>
           <div>
             <table style={{marginTop: '15px', marginBottom: '15px', marginRight: '700px', marginLeft: '300px'}}>
               <tbody>
