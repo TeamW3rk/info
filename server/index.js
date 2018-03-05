@@ -31,7 +31,7 @@ app.use(express.static(__dirname + '/../client'));
 //all requests will be sent to the router to be directed to the correct endpoints
 
 //******************************** */
-app.get(`/restaurant/:restaurant_id/about`, (req, res) => {
+app.get(`/r/:restaurant_id/about`, (req, res) => {
   // console.log('about get function was invoked', req.params.restaurant_id);
   let id = req.params.restaurant_id;
   // db.findInformation((error, item) => {
