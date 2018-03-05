@@ -17,7 +17,9 @@ let app = express();
 
 app.use(parser.json());
 
-app.use(express.static(__dirname + '/../client'));
+// app.use(express.static(__dirname + '/../client'));
+app.use('/r/:restaurant_id', express.static(__dirname + '/../client'));
+
 
 //middleware for cross domain communication
 // app.use(function(req, res, next) {
@@ -31,6 +33,20 @@ app.use(express.static(__dirname + '/../client'));
 //all requests will be sent to the router to be directed to the correct endpoints
 
 //******************************** */
+// app.get(`/r/:restaurant_id/about`, (req, res) => {
+//   // console.log('about get function was invoked', req.params.restaurant_id);
+//   let id = req.params.restaurant_id;
+//   // db.findInformation((error, item) => {
+//   //   if (error) throw error;
+//   //   res.send(item);
+//   // });
+//   db.information(id, (item, err) => {
+//     // console.log('this is item 0', item[0]);
+//     if (err) throw err;
+//     res.send(item[0]);
+//   });
+// })
+
 app.get(`/r/:restaurant_id/about`, (req, res) => {
   // console.log('about get function was invoked', req.params.restaurant_id);
   let id = req.params.restaurant_id;
@@ -44,7 +60,6 @@ app.get(`/r/:restaurant_id/about`, (req, res) => {
     res.send(item[0]);
   });
 })
-
 // app.get(`/restaurant/:restaurant_id/location`, (req, res) => {
 //   console.log('location get function was invoked', req.params.restaurant_id);
 //   let id = req.params.restaurant_id;
