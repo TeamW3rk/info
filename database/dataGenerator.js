@@ -157,3 +157,13 @@ let generateMockData = () => {
 
 
 module.exports.generateMockData = generateMockData;
+module.exports.longitude = longitude;
+module.exports.latitude = latitude;
+module.exports.phoneNumber = phoneNumber;
+module.exports.priceRange = priceRange;
+module.exports.ratings = ratings;
+module.exports.reviews = reviews;
+module.exports.topTags = topTags;
+module.exports.map = map;
+module.exports.morningTime = morningTime;
+module.exports.eveningTime = eveningTime;
