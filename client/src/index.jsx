@@ -41,7 +41,7 @@ class App extends React.Component {
 
   //send GET request to get the about information for the restaurant 
   getInformation(restaurant_id) {
-    axios.get(`/restaurant/${restaurant_id}/about`)
+    axios.get(`/r/${restaurant_id}/about`)
     .then((response) => {
       console.log(response);
       this.setState({
@@ -89,7 +89,7 @@ class App extends React.Component {
             <table style={{marginTop: '15px', marginBottom: '15px', marginRight: '700px', marginLeft: '300px'}}>
               <tbody>
                 <tr>
-                  <td style={{width: '70%'}}><LeftAbout restaurant={this.state.restaurant}/></td>
+                  <td style={{width: '60%'}}><LeftAbout restaurant={this.state.restaurant}/></td>
                   <td><Maps restaurant={this.state.restaurant}/><RightAbout restaurant={this.state.restaurant}/></td>
                 </tr>
               </tbody>
