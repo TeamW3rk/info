@@ -19,7 +19,7 @@ const LeftAbout = (props) => (
     <p className="phone" style={{fontWeight: 'bold', fontSize: '14px'}}><img src='https://image.flaticon.com/icons/svg/684/684812.svg' style={{width: '20px', height: '20px'}}></img> Phone Number</p>
     <p style={{fontSize: '14px', marginLeft: '1.7em'}}>{props.restaurant.phoneNumber}</p>
     <p className="website" style={{fontWeight: 'bold', fontSize: '14px'}}><img src='https://image.flaticon.com/icons/svg/109/109476.svg' style={{width: '20px', height: '20px'}}></img> Website</p>
-    <p style={{fontSize: '14px', marginLeft: '1.7em'}}><a href={props.restaurant.website}>{props.restaurant.website}</a></p>
+    <p style={{fontSize: '14px', marginLeft: '1.7em'}}><a href={props.restaurant.website} style={{color: 'red'}}>{props.restaurant.website}</a></p>
     <p className="payment" style={{fontWeight: 'bold', fontSize: '14px'}}><img src='https://image.flaticon.com/icons/svg/271/271035.svg' style={{width: '20px', height: '20px'}}></img> Payment</p>
     <p style={{fontSize: '14px', marginLeft: '1.7em'}}>AMEX, Visa, Discover, Master</p>
     <p className="dressCode" style={{fontWeight: 'bold', fontSize: '14px'}}><img src='https://image.flaticon.com/icons/svg/141/141585.svg' style={{width: '20px', height: '20px'}}></img> Dress Code</p>
