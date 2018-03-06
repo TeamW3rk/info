@@ -18,7 +18,7 @@ let app = express();
 app.use(parser.json());
 
 // app.use(express.static(__dirname + '/../client'));
-app.use('/r/:restaurant_id', express.static(__dirname + '/../client'));
+app.use('/r/:restaurant_id/', express.static(__dirname + '/../client'));
 
 
 //middleware for cross domain communication
