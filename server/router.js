@@ -1,9 +1,9 @@
 // const router = require('express').Router();
-const db = require('../database/index.js');
 const express = require('express');
+const db = require('../database/index.js');
 const bodyParser = require('body-parser');
 // const requests = require('./requests.js');
-
+console.log(db);
 // router.use((req, res, next) => {
 //   res.header("Access-Control-Allow-Origin", "*");
 //   res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -20,7 +20,7 @@ router.get(`/:restaurant_id/about`, (req, res) => {
   // console.log('about get function was invoked', req.params.restaurant_id);
   let id = req.params.restaurant_id;
   console.log('i invoked', id);
-  console.log(db.information);
+  console.log(db);
   db.information(id, (item, err) => {
     console.log('this is item 0', item[0]);
     if (err) throw err;
