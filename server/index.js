@@ -18,7 +18,7 @@ app.use(cors());
 
 app.use(parser.json());
 
-app.use(express.static(__dirname + '/../client'));
+app.use(express.static(__dirname + '/../client/dist'));
 // app.use('/r/:restaurant_id/', express.static(__dirname + '/../client'));
 
 
@@ -33,6 +33,10 @@ app.use(express.static(__dirname + '/../client'));
 app.use('/r', router);
 //all requests will be sent to the router to be directed to the correct endpoints
 
+//handles endpoint errors
+app.get('*', (req, res) => {
+  res.status(404).send('invalid endpoint');
+});
 //******************************** */
 // app.get(`/r/:restaurant_id/about`, (req, res) => {
 //   // console.log('about get function was invoked', req.params.restaurant_id);

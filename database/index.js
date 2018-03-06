@@ -169,38 +169,37 @@ let save = (data) => {
 // }
 
 //going to make each of these functions a method of an object
-module.exports = {
-  console: function() {CONSOLE.LOG('hi')},
-  information: (id, callback) => {
-    //will send a query to the database to retrieve the item with the cooresponding id 
-    // let information = db.getCollection('locations');
-    Information.find({restaurant_id: id}, (err, item) => {
-      console.log('it works');
-      if (err) throw err;
-      callback(item);
-    });
-  }
-//   // location: (id, callback) => {
-//   //   // let location = db.getCollection('locations');
-//   //   location.find({restaurant_id: id}, (error, item) => {
-//   //     console.log("ITEM~~~~~~~~~~~~~~~~", item);
-//   //     if (error) throw error;
-//   //     callback(item);
-//   //   });
-//   // }
-}
+// module.exports = {
+//   console: function() {CONSOLE.LOG('hi')},
+//   information: (id, callback) => {
+//     //will send a query to the database to retrieve the item with the cooresponding id 
+//     // let information = db.getCollection('locations');
+//     Information.find({restaurant_id: id}, (err, item) => {
+//       console.log('it works');
+//       if (err) throw err;
+//       callback(item);
+//     });
+//   }
+// //   // location: (id, callback) => {
+// //   //   // let location = db.getCollection('locations');
+// //   //   location.find({restaurant_id: id}, (error, item) => {
+// //   //     console.log("ITEM~~~~~~~~~~~~~~~~", item);
+// //   //     if (error) throw error;
+// //   //     callback(item);
+// //   //   });
+// //   // }
+// }
 
-// let information = function(id, callback){
-//   //will send a query to the database to retrieve the item with the cooresponding id 
-//   // let information = db.getCollection('locations');
-//   Information.find({restaurant_id: id}, (err, item) => {
-//     console.log('im here');
-//     if (err) throw err;
-//     callback(item);
-//   });
-// };
+let information = function(id, callback){
+  //will send a query to the database to retrieve the item with the cooresponding id 
+  // let information = db.getCollection('locations');
+  Information.find({restaurant_id: id}, (err, item) => {
+    if (err) throw err;
+    callback(item);
+  });
+};
 
-// module.exports = information;
+module.exports.information = information;
 // module.exports.save = save;
 // module.exports.findLocation = findLocation;
 // module.exports.findInformation = findInformation;
