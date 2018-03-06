@@ -2,7 +2,7 @@ import React from 'react';
 
 //top tags section of the component 
 const TopTags = (props) => {
-  console.log('this is props', props)
+  console.log('this is props', props.restaurant.topTags);
   return (
     <table className="TagRow" style={{marginTop: '15px', marginBottom: '15px', marginRight: '700px', marginLeft: '300px'}}> 
       <tbody>
