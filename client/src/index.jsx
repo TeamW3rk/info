@@ -43,7 +43,7 @@ class App extends React.Component {
 
   //send GET request to get the about information for the restaurant 
   getInformation(restaurant_id) {
-    axios.get(`/r/${restaurant_id}/about`)
+    axios.get(`http://127.0.0.1:1127/r/${restaurant_id}/about`)
     .then((response) => {
       console.log(response);
       this.setState({

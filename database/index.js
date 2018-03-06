@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const faker = require('faker');  //faker will be used to generate dummy data
 const dataGenerator = require('./dataGenerator.js');
-const requests = require('../server/requests.js');
+const router = require('../server/router.js');
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/restaurants');
 // , {useMongoClient: true}
