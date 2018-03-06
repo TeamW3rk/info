@@ -19,14 +19,10 @@ router.use(bodyParser.json());
 router.get(`/:restaurant_id/about`, (req, res) => {
   // console.log('about get function was invoked', req.params.restaurant_id);
   let id = req.params.restaurant_id;
-  console.log('i invoked');
-  // db.findInformation((error, item) => {
-  //   if (error) throw error;
-  //   res.send(item);
-  // });
+  console.log('i invoked', id);
   console.log(db.information);
   db.information(id, (item, err) => {
-    // console.log('this is item 0', item[0]);
+    console.log('this is item 0', item[0]);
     if (err) throw err;
     res.send(item[0]);
   });
