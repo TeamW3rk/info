@@ -30,20 +30,24 @@ class App extends React.Component {
   //this will generate a random id number between 1-200 and will render the page initially
   randomSearch() {
     // let randomId = Math.floor(Math.random() * (200 - 1)) + 1;
-    let path = window.location.pathname;
+    // let path = window.location.pathname;
+    let path = this.props.id;
     let id = path.split('/');
+    console.log(this.props.id);
+    console.log(id);
     //this axios request will send a concurrent request to the server to get
     //information for both the about and location sections
     // axios.all([this.getInformation(randomId), this.getLocation(randomId)])
     //   .then(axios.spread((information, location) => {
     //     console.log(information, location);
     //   }));
-    this.getInformation(parseInt(id[2]));
+    // this.getInformation(parseInt(id[2]));
+    this.getInformation(id[2]);
   }
 
   //send GET request to get the about information for the restaurant 
   getInformation(restaurant_id) {
-    axios.get(`/r/${restaurant_id}/about`)
+    axios.get(`http://127.0.0.1:1127/r/${restaurant_id}/about`)
     .then((response) => {
       console.log(response);
       this.setState({
@@ -54,6 +58,7 @@ class App extends React.Component {
     })
     .catch((error) => {
       console.log(error);
+      //comment
     });
   }
   
@@ -121,4 +126,5 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+// export default ReactDOM.render(<App />, document.getElementById('app'));
+window.App = App;

@@ -2,7 +2,6 @@ const webpack = require('webpack');
 
 module.exports = {
     entry: [
-      'react-hot-loader/patch',
       './client/src/index.jsx'
     ],
     module: {
@@ -35,16 +34,11 @@ module.exports = {
       extensions: ['*', '.js', '.jsx']
     },
     output: {
-      path: __dirname + '/client',
-      publicPath: '/',
+      path: __dirname + '/client/dist',
+      // publicPath: '/',
       filename: 'bundle.js'
     },
-    plugins: [
-      new webpack.HotModuleReplacementPlugin()
-    ],
     devServer: {
-      contentBase: './client',
-      port: 1127,
-      hot: true
+      contentBase: './client/dist'
     }
   };

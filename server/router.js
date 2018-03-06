@@ -1,20 +1,26 @@
-const router = require('express').Router();
-const requests = require('./requests.js');
+const express = require('express');
+const db = require('../database/index.js');
+const bodyParser = require('body-parser');
 
-router.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  next();
+const router = express.Router();
+
+router.use('/:restaurant_id/', express.static(__dirname + '/../client/dist'));
+
+router.use(bodyParser.json());
+//http GET request for `/about`
+router.get(`/:restaurant_id/about`, (req, res) => {
+  // console.log('about get function was invoked', req.params.restaurant_id);
+  let id = req.params.restaurant_id;
+  db.information(id, (item, err) => {
+    // console.log('this is item 0', item[0]);
+    if (err) throw err;
+    res.send(item[0]);
+  });
 });
 
-// http GET request for `/about`
-router.get(`/:restaurant_id/about`, requests.about.get);
-
-//http GET request for  `/location`
-router.get(`/:restaurant_id/location`, requests.location.get);
-
-// router.route(`/:restaurant_id/about`).get(requests.about.get);
-
-// router.route(`/:restaurant_id/location`).get(requests.location.get);
+//handles endpoint errors
+router.get('*', (req, res) => {
+  res.status(404).send('invalid endpoint');
+});
 
 module.exports = router;
