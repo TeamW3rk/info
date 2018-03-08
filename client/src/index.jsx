@@ -9,6 +9,7 @@ import Ratings from './components/Ratings.jsx';
 import RightAbout from './components/RightAbout.jsx';
 import Title from './components/Title.jsx';
 import TopTags from './components/TopTags.jsx';
+import $ from 'jquery';
 
 class App extends React.Component {
   constructor(props) {
@@ -96,6 +97,12 @@ class App extends React.Component {
     }
   }
 
+  //will unveal the box of text when button is clicked
+  reveal() {
+    $('.info-box').css('max-height', '800px');
+    $('.reveal').css('bottom', '');
+  }
+
   render() {
     if (this.state.isLoading) {
       return (
@@ -110,7 +117,7 @@ class App extends React.Component {
           <Ratings restaurant={this.state.restaurant} />
           <TopTags restaurant={this.state.restaurant}/>
           <Description restaurant={this.state.restaurant} readMore={this.readMore.bind(this)} readLess={this.readLess.bind(this)} toggled={this.state.readmore}/>
-          <div>
+          <div className='info-box' style={{maxHeight: '300px', position: 'relative', overflow: 'hidden'}}>
             <table style={{marginTop: '15px', marginBottom: '15px', marginRight: '700px', marginLeft: '300px'}}>
               <tbody>
                 <tr>
@@ -119,6 +126,9 @@ class App extends React.Component {
                 </tr>
               </tbody>
             </table>
+          <div className='reveal' style={{position: 'absolute', bottom: '0', width: '40.5%', textAlign: 'center', 
+             backgroundImage: 'linear-gradient(to bottom, transparent, #CACACA)', marginRight: '700px', marginLeft: '300px'}}>
+            <button className='show-more' onClick={this.reveal.bind(this)} style={{font: 'arial', color: 'red', width: '35%', border: 'none', background: 'none'}}>View All Details</button></div>
           </div>
         </div> 
       )
