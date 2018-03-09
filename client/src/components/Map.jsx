@@ -10,7 +10,3 @@ const Maps = (props) => {
 };
 
 export default Maps;
-
-// <ul>{props.item.restaurant.latitude}</ul>
-// <ul>{props.item.restaurant.longitude}</ul>
-{/* <iframe src={props.restaurant.map}></iframe> */}

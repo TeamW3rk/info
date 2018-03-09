@@ -17,5 +17,3 @@ const RightAbout = (props) => (
 );
 
 export default RightAbout;
-
-{/* <Maps item={props}/> */}

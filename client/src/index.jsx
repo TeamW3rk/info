@@ -19,30 +19,12 @@ class App extends React.Component {
       isLoading: true,
       readmore: false //readmore button not toggled
     };
-    //this will be the object that will be taken from our database
-    //this state will be passed to each of the child components so they can access 
-    //each of the properties that are within the parent's stateful object
   }
 
-  //create an onload search for a random item to render to the page since this component 
-  //does not a specified search or anything for a specific item at the moment and is completely
-  //reliant on the search component for all rendering of information
-
-  //this will generate a random id number between 1-200 and will render the page initially
-  randomSearch() {
-    // let randomId = Math.floor(Math.random() * (200 - 1)) + 1;
-    // let path = window.location.pathname;
+  fetch() {
     let path = this.props.id;
     let id = path.split('/');
-    console.log(this.props.id);
-    console.log(id);
-    //this axios request will send a concurrent request to the server to get
-    //information for both the about and location sections
-    // axios.all([this.getInformation(randomId), this.getLocation(randomId)])
-    //   .then(axios.spread((information, location) => {
-    //     console.log(information, location);
-    //   }));
-    // this.getInformation(parseInt(id[2]));
+
     this.getInformation(id[2]);
   }
 
@@ -55,28 +37,15 @@ class App extends React.Component {
         restaurant: response.data,
         isLoading: false, 
       });
-      // console.log('this console log is from within the axios request success', this.state)
     })
     .catch((error) => {
       console.log(error);
-      //comment
     });
   }
   
-  //send GET request to get the location coordinates for the restaurant
-  // getLocation(restaurant_id) {
-  //   axios.get(`/restaurant/${restaurant_id}/location`)
-  //   .then((response) => {
-  //     console.log(response);
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //   });
-  // }
-
   //use native Component Will Mount to invoke the randomSearch function above before rendering
   componentWillMount() {
-    this.randomSearch();
+    this.fetch();
   }
 
   //will rerender the description when clicked

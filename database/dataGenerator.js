@@ -1,9 +1,6 @@
 const faker = require('faker');
 const mongoose = require('mongoose');
 
-// //data capsule
-// let data = [];
-
 //create ID counter
 let idCount = 1;
 
@@ -151,7 +148,6 @@ let generateMockData = () => {
     });
     idCount++;
   }
-  // console.log(data);
   return data;
 };
 
