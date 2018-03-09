@@ -1,4 +1,4 @@
-FullStack Fat Join Table - Informtion and Maps Module
+OpenTable Clone FullFlap StackJacks - Information and Maps Module
 
 > Project description:
 This project will be a recreation of a individual restaurant webpage on www.opentable.com.
@@ -22,13 +22,16 @@ This module is solely focused on the about and maps portion of the actual openta
 
 Start up MongoDB using "mongod" and "mongo" command in terminal in About_Map_Info-Module root diretory.
 From terminal, go in the database directory and run "node index.js" to populate the database with dummy data.
-To run Jest tests, run command "jest" from either the root directory or from the "__tests__" directory
+To run Jest tests, run command "jest" from either the root directory or from the "__tests__" directory. 
+
+
 
 ## Requirements
 
 An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
 
-- Node 6.13.0
+- Node 6.11.3
+- Suggested to install NVM
 - etc
 
 ## Development
