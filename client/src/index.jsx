@@ -128,7 +128,7 @@ class App extends React.Component {
             </table>
           <div className='reveal' style={{position: 'absolute', bottom: '0', width: '40.5%', textAlign: 'center', 
              backgroundImage: 'linear-gradient(to bottom, transparent, #CACACA)', marginRight: '700px', marginLeft: '300px'}}>
-            <button className='show-more' onClick={this.reveal.bind(this)} style={{font: 'arial', color: 'red', width: '35%', border: 'none', background: 'none'}}>View All Details</button></div>
+            <button className='show-more' onClick={this.reveal.bind(this)} style={{font: 'arial', color: 'red', width: '35%', border: 'bold', background: 'white'}}>View All Details</button></div>
           </div>
         </div> 
       )
