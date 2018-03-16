@@ -59,76 +59,34 @@ let informationSchema = mongoose.Schema({
 let Information = mongoose.model('Information', informationSchema);
 
 //variable which will have the data in an array object with nested objects
-let data = dataGenerator.generateMockData();
 
-let save = (data) => {
-  data.forEach((item) => {
-
-    let restaurant = new Information({
-      restaurant_id: item.restaurant_id,
-      name: item.name,
-      latitude: item.latitude,
-      longitude: item.longitude,
-      map: item.map,
-      diningStyle: item.diningStyle,
-      cuisines: item.cuisines,
-      hoursOfOperations: {
-        monday: {
-          served : item.hoursOfOperations.monday.served,
-          lunch: item.hoursOfOperations.monday.lunch,
-          dinner: item.hoursOfOperations.monday.dinner
-        },
-        friday: {
-          served: item.hoursOfOperations.friday.served, 
-          lunch: item.hoursOfOperations.friday.lunch,
-          dinner: item.hoursOfOperations.friday.dinner
-        },
-        saturday: {
-          served : item.hoursOfOperations.saturday.served,
-          lunch: item.hoursOfOperations.saturday.lunch,
-          dinner: item.hoursOfOperations.saturday.dinner
-        }
-      }, 
-      crossStreet: item.crossStreet,
-      dressCode: item.dressCode,
-      priceRange: item.priceRange,
-      paymentOptions: {
-        visa: item.paymentOptions.visa,
-        master: item.paymentOptions.master,
-        amex: item.paymentOptions.amex,
-        discover: item.paymentOptions.discover
-      },
-      phoneNumber: item.phoneNumber,
-      website: item.website,
-      catering: {
-        cater: item.catering.cater,
-        description: item.catering.description
-      },
-      publicTransit: item.publicTransit,
-      executiveChef: item.executiveChef,
-      additional: {
-        chef: item.additional.chef, 
-        description: item.additional.description
-      },
-      specialEvents: item.specialEvents, 
-      promotions: item.promotions,
-      rating: item.rating,
-      reviews: item.reviews,
-      topTags: item.topTags,
-      description: item.description,
-      neighborhood: item.neighborhood,
-      parking: item.parking
-    });
-
-    restaurant.save((err) => {
-      if (err) return handleError(err);
-    });
-  });
+const run = async () => {
+  for (let i = 0; i < 10000000 / 1000; i += 1) {
+    let docs = generateData(i + 1);
+    await insertBulk(docs);
+    if(i % 100 === 0) {
+      console.log(i * 1000);
+      console.log((new Date() - startTime) / 1000 /60, 'minutes');
+    }
+  }
+  mongoose.disconnect();
 }
-//invocation of the save function to populate the database
 
-//***UNCOMMENT FUNCTION TO POPULATE THE DB WITH NODE***
-// save(data); 
+const generateData = (id) => {
+  const docs = [];
+  for (let i = 0; i < 1000; i += 1) {
+    docs.push(dataGenerator.generateSingleData(id));
+  }
+  return docs;
+}
+
+const insertBulk = (docs) => {
+  return Information.insertMany(docs);
+}
+
+const startTime = new Date();
+console.log(startTime);
+run();
 
 let information = function(id, callback){
   //will send a query to the database to retrieve the item with the cooresponding id 
