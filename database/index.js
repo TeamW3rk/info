@@ -1,141 +1,72 @@
-const mongoose = require('mongoose');
-const faker = require('faker');  //faker will be used to generate dummy data
+const cluster = require('cluster');
+const numCPUs = require('os').cpus().length;
+
+
+const mongodb = require('mongodb');
 const dataGenerator = require('./dataGenerator.js');
-const router = require('../server/router.js');
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/restaurants');
 
-let informationSchema = mongoose.Schema({
-  restaurant_id: Number,
-  name: String,
-  latitude: String,
-  longitude: String,
-  map: String, 
-  diningStyle: String,
-  cuisines: String,
-  hoursOfOperations: {
-   monday: {
-     served : Boolean,
-     lunch: String,
-     dinner: String
-   },
-   friday: {
-     served: Boolean, 
-     lunch: String,
-     dinner: String
-   },
-   saturday: {
-     served : Boolean,
-     lunch: String,
-     dinner: String
-   }
-  }, 
-  crossStreet: String,
-  dressCode: String,
-  priceRange: String,
-  paymentOptions: Object,
-  phoneNumber: String,
-  website: String,
-  catering: {
-    cater: Boolean,
-    description: String
-  },
-  publicTransit: String,
-  executiveChef: String,
-  additional: {
-    chef: Boolean, 
-    description: String
-  },
-  specialEvents: String, 
-  promotions: String,
-  rating: String,
-  reviews: String,
-  topTags: Array,
-  description: String,
-  neighborhood: String,
-  parking: String
-});
+const MongoClient = mongodb.MongoClient;
+const url = 'mongodb://localhost:27017';
 
-let Information = mongoose.model('Information', informationSchema);
+const generateData = (id) => {
+  const docs = [];
+  for (let i = 0; i < 1000; i += 1) {
+    docs.push(dataGenerator.generateSingleData(id));
+  }
+  return docs;
+};
 
-//variable which will have the data in an array object with nested objects
-let data = dataGenerator.generateMockData();
-
-let save = (data) => {
-  data.forEach((item) => {
-
-    let restaurant = new Information({
-      restaurant_id: item.restaurant_id,
-      name: item.name,
-      latitude: item.latitude,
-      longitude: item.longitude,
-      map: item.map,
-      diningStyle: item.diningStyle,
-      cuisines: item.cuisines,
-      hoursOfOperations: {
-        monday: {
-          served : item.hoursOfOperations.monday.served,
-          lunch: item.hoursOfOperations.monday.lunch,
-          dinner: item.hoursOfOperations.monday.dinner
-        },
-        friday: {
-          served: item.hoursOfOperations.friday.served, 
-          lunch: item.hoursOfOperations.friday.lunch,
-          dinner: item.hoursOfOperations.friday.dinner
-        },
-        saturday: {
-          served : item.hoursOfOperations.saturday.served,
-          lunch: item.hoursOfOperations.saturday.lunch,
-          dinner: item.hoursOfOperations.saturday.dinner
-        }
-      }, 
-      crossStreet: item.crossStreet,
-      dressCode: item.dressCode,
-      priceRange: item.priceRange,
-      paymentOptions: {
-        visa: item.paymentOptions.visa,
-        master: item.paymentOptions.master,
-        amex: item.paymentOptions.amex,
-        discover: item.paymentOptions.discover
-      },
-      phoneNumber: item.phoneNumber,
-      website: item.website,
-      catering: {
-        cater: item.catering.cater,
-        description: item.catering.description
-      },
-      publicTransit: item.publicTransit,
-      executiveChef: item.executiveChef,
-      additional: {
-        chef: item.additional.chef, 
-        description: item.additional.description
-      },
-      specialEvents: item.specialEvents, 
-      promotions: item.promotions,
-      rating: item.rating,
-      reviews: item.reviews,
-      topTags: item.topTags,
-      description: item.description,
-      neighborhood: item.neighborhood,
-      parking: item.parking
+const workerPromise = (worker) => {
+  return new Promise((resolve, reject) => {
+    worker.on('disconnect', () => {
+      resolve();
+      reject();
     });
-
-    restaurant.save((err) => {
-      if (err) return handleError(err);
-    });
-  });
-}
-//invocation of the save function to populate the database
-
-//***UNCOMMENT FUNCTION TO POPULATE THE DB WITH NODE***
-// save(data); 
-
-let information = function(id, callback){
-  //will send a query to the database to retrieve the item with the cooresponding id 
-  Information.find({restaurant_id: id}, (err, item) => {
-    if (err) throw err;
-    callback(item);
   });
 };
 
-module.exports.information = information;
+// connect to database
+const run = async () => {
+  const id = cluster.worker.id;
+  const client = await MongoClient.connect(url);
+  const db = client.db('restaurants');
+  const collection = db.collection('information');
+  for (let i = (id - 1) * 10 ** 4 / numCPUs; i < id * 10 ** 4 / numCPUs; i += 1) {
+    let docs = generateData(i + 1);
+    await collection.insertMany(docs);
+  }
+  console.log((new Date() - startTime) / 1000 /60, 'minutes');
+  client.close();
+  process.exit();
+};
+
+const createIndexes = async () => {
+  const client = await MongoClient.connect(url);
+  const db = client.db('restaurants');
+  const collection = db.collection('information');
+  return collection.createIndex({ restaurant_id: 1}).then(() => client);
+};
+
+const startTime = new Date();
+console.log(startTime);
+
+if (cluster.isMaster) {
+  console.log(`Master ${process.pid} is running`);
+
+  // Fork workers.
+  const workerPromises = [];
+  for (let i = 0; i < numCPUs; i++) {
+    let worker = cluster.fork();
+    workerPromises.push(workerPromise(worker));
+  }
+
+  Promise.all(workerPromises).then( async () => {
+    const client = await createIndexes();
+    console.log((new Date() - startTime) / 1000 /60 + ' minutes');
+    client.close();
+  });
+
+} else {
+  run();
+  console.log(`Worker ${process.pid} started`);
+}
