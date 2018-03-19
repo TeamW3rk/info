@@ -22,10 +22,7 @@ class App extends React.Component {
   }
 
   fetch() {
-    let path = this.props.id;
-    let id = path.split('/');
-
-    this.getInformation(id[2]);
+    this.getInformation(this.props.restaurantId);
   }
 
   //send GET request to get the about information for the restaurant 
@@ -105,5 +102,6 @@ class App extends React.Component {
   }
 }
 
-// export default ReactDOM.render(<App />, document.getElementById('app'));
+const restaurantId = window.location.href.slice(window.location.href.search('r') + 2).replace('/', '');
+export default ReactDOM.render(<App restaurantId={restaurantId}/>, document.getElementById('app'));
 window.App = App;

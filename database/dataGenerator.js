@@ -1,5 +1,4 @@
 const faker = require('faker');
-const mongoose = require('mongoose');
 
 //create ID counter
 let idCount = 1;

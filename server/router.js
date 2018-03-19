@@ -1,12 +1,10 @@
 const express = require('express');
 const db = require('../database/index.js');
-const bodyParser = require('body-parser');
 
 const router = express.Router();
 
 router.use('/:restaurant_id/', express.static(__dirname + '/../client/dist'));
 
-router.use(bodyParser.json());
 //http GET request for `/about`
 router.get(`/:restaurant_id/about`, (req, res) => {
   let id = req.params.restaurant_id;
