@@ -1,70 +1,95 @@
-const cluster = require('cluster');
-const numCPUs = require('os').cpus().length;
-const mongodb = require('mongodb');
+const pgp = require('pg-promise')({});
+const path = require('path');
 const dataGenerator = require('./dataGenerator.js');
 
-const MongoClient = mongodb.MongoClient;
-const url = 'mongodb://localhost:27017';
+const QueryFile = pgp.QueryFile;
 
-const generateData = (id) => {
-  const docs = [];
-  for (let i = 0; i < 1000; i += 1) {
-    docs.push(dataGenerator.generateSingleData(id));
-  }
-  return docs;
+const sql = (file) => {
+  const filePath = path.join(__dirname, file);
+  console.log(filePath)
+  return new QueryFile(filePath, { minify: true });
 };
 
-const workerPromise = (worker) => {
-  return new Promise((resolve, reject) => {
-    worker.on('disconnect', () => {
-      resolve();
-      reject();
+const schema = sql('/create_schema.sql');
+const table = sql('/create_table.sql');
+
+const columnSet = [
+  'restaurant_id',
+  'name',
+  'latitude',
+  'longitude',
+  'map',
+  'dining_style',
+  'cuisines',
+  'hours_of_operations',
+  'cross_street',
+  'dress_code',
+  'price_range',
+  'payment_options',
+  'phone_number',
+  'website',
+  'catering',
+  'public_transit',
+  'executive_chef',
+  'additional',
+  'special_events',
+  'promotions',
+  'rating',
+  'reviews',
+  'top_tags',
+  'description',
+  'neighborhood',
+  'parking',
+];
+
+const tableName = { table: 'info'};
+
+const createTable = async() => {
+  let db = pgp({
+    host: 'localhost',
+    port: 5432,
+    database: 'postgres',
+    user: 'mcestrada2',
+  });
+  await db.none(schema);
+  db.$pool.end;
+  db = pgp({
+    host: 'localhost',
+    port: 5432,
+    database: 'restaurants',
+    user: 'mcestrada2',
+  });
+  return db.none(table).then(() => db);
+}
+
+function getNextData(t, pageIndex) {
+  let data = null;
+  if (pageIndex < 10000) {
+    if(pageIndex % 100 === 0) {console.log(pageIndex * 1000, (new Date - startTime) / 60000)};
+    data = [];
+    for (let i = 0; i < 1000; i++) {
+      const idx = pageIndex * 1000 + i; // to insert unique product names
+      data.push(dataGenerator.generateSingleData(idx));
+    }
+  }
+  return Promise.resolve(data);
+}
+const startTime = new Date();
+const run = async () => {
+  const db = await createTable();
+  const cs = new pgp.helpers.ColumnSet(columnSet, tableName);
+  const response = await db.tx('massive-insert', t => {
+    return t.sequence(index => {
+      return getNextData(t, index)
+        .then(data => {
+          if(data) {
+            const insert = pgp.helpers.insert(data, cs);
+            return t.none(insert);
+          }
+        });
     });
   });
-};
-
-// connect to database
-const run = async () => {
-  const id = cluster.worker.id;
-  const client = await MongoClient.connect(url);
-  const db = client.db('restaurants');
-  const collection = db.collection('information');
-  for (let i = (id - 1) * 10 ** 4 / numCPUs; i < id * 10 ** 4 / numCPUs; i += 1) {
-    let docs = generateData(i + 1);
-    await collection.insertMany(docs);
-  }
-  console.log((new Date() - startTime) / 1000 /60, 'minutes');
-  client.close();
-  process.exit();
-};
-
-const createIndexes = async () => {
-  const client = await MongoClient.connect(url);
-  const db = client.db('restaurants');
-  const collection = db.collection('information');
-  return collection.createIndex({ restaurant_id: 1}).then(() => client);
-};
-
-const startTime = new Date();
-console.log(startTime);
-
-if (cluster.isMaster) {
-  console.log(`Master ${process.pid} is running`);
-
-  // Fork workers.
-  const workerPromises = [];
-  for (let i = 0; i < numCPUs; i++) {
-    let worker = cluster.fork();
-    workerPromises.push(workerPromise(worker));
-  }
-
-  Promise.all(workerPromises).then( async () => {
-    const client = await createIndexes();
-    console.log((new Date() - startTime) / 1000 /60 + ' minutes');
-    client.close();
-  });
-
-} else {
-  run();
-  console.log(`Worker ${process.pid} started`);
+  console.log('Total batches:', response.total, ', Duration:', response.duration / 60000);
+  db.$pool.end;
 }
+run();
