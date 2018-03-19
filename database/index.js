@@ -1,9 +1,6 @@
-const mongoose = require('mongoose');
 const faker = require('faker');  //faker will be used to generate dummy data
 const dataGenerator = require('./dataGenerator.js');
 const router = require('../server/router.js');
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/restaurants');
 
 let informationSchema = mongoose.Schema({
   restaurant_id: Number,
@@ -55,15 +52,5 @@ let informationSchema = mongoose.Schema({
   neighborhood: String,
   parking: String
 });
-
-let Information = mongoose.model('Information', informationSchema);
-
-let information = function(id, callback){
-  //will send a query to the database to retrieve the item with the cooresponding id 
-  Information.find({restaurant_id: id}, (err, item) => {
-    if (err) throw err;
-    callback(item);
-  });
-};
 
 module.exports.information = information;

@@ -92,9 +92,9 @@ const generateSingleData = (idCount) => {
     latitude: latitude(),
     longitude: longitude(),
     map: map(),
-    diningStyle: faker.lorem.word(),
+    dining_style: faker.lorem.word(),
     cuisines: faker.lorem.word(),
-    hoursOfOperations: {
+    hours_of_operations: {
      monday: {
        served : true,
        lunch: morningTime(),
@@ -111,32 +111,32 @@ const generateSingleData = (idCount) => {
        dinner: eveningTime()
      }
     }, 
-    crossStreet: faker.lorem.sentence(),
-    dressCode: faker.lorem.sentence(),
-    priceRange: priceRange(),
-    paymentOptions: {
+    cross_street: faker.lorem.sentence(),
+    dress_code: faker.lorem.sentence(),
+    price_range: priceRange(),
+    payment_options: {
       visa: true,
       master: true,
       amex: true,
       discover: true
     },
-    phoneNumber: phoneNumber() ,
+    phone_number: phoneNumber() ,
     website: `${faker.lorem.word()}.com`,
     catering: {
       cater: true,
       description: faker.lorem.paragraph()
     },
-    publicTransit: faker.lorem.sentence(),
-    executiveChef: faker.name.firstName(),
+    public_transit: faker.lorem.sentence(),
+    executive_chef: faker.name.firstName(),
     additional: {
       chef: true, 
       description: faker.lorem.paragraph()
     },
-    specialEvents: faker.lorem.paragraph(), 
+    special_events: faker.lorem.paragraph(), 
     promotions: faker.lorem.paragraph(),
     rating: ratings(),
     reviews: reviews(),
-    topTags: topTags(),
+    top_tags: topTags(),
     description: faker.lorem.paragraph() + faker.lorem.paragraph(),
     neighborhood: faker.lorem.words(),
     parking: faker.lorem.sentence()
