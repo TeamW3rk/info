@@ -2,12 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const parser = require('body-parser');
 
-//importing database files so tests with the http requests can be ran 
-const db = require('../database/index.js');
-
 let app = express();
-
-// let cors = cors();
 
 //importing our router file
 const router = require('./router.js');

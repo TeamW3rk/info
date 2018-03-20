@@ -33,6 +33,7 @@
     "axios": "^0.18.0",
     "bluebird": "^3.5.1",
     "browserify-css": "^0.12.1",
+    "camelcase": "^4.1.0",
     "cors": "^2.8.4",
     "express": "^4.16.2",
     "faker": "^4.1.0",

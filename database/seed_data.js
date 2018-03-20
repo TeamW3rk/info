@@ -12,6 +12,7 @@ const sql = (file) => {
 
 const schema = sql('/create_schema.sql');
 const table = sql('/create_table.sql');
+const index = sql('/create_index.sql');
 
 const columnSet = [
   'restaurant_id',
@@ -89,6 +90,7 @@ const run = async () => {
         });
     });
   });
+  await db.none(index);
   console.log('Total batches:', response.total, ', Duration:', response.duration / 60000);
   db.$pool.end;
 }

@@ -1,19 +1,17 @@
 const express = require('express');
 const db = require('../database/index.js');
-const bodyParser = require('body-parser');
+const helper = require('./helper.js');
 
 const router = express.Router();
 
 router.use('/:restaurant_id/', express.static(__dirname + '/../client/dist'));
 
-router.use(bodyParser.json());
 //http GET request for `/about`
 router.get(`/:restaurant_id/about`, (req, res) => {
   let id = req.params.restaurant_id;
-  db.information(id, (item, err) => {
-    if (err) throw err;
-    res.send(item[0]);
-  });
+  db.retrieveData(id)
+    .then((data) => {res.send(helper.covertKeysToCamelCase(data[0]))})
+    .catch(err => { console.log(err); });
 });
 
 //handles endpoint errors
