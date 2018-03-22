@@ -18,7 +18,6 @@ const workerPromise = (worker) => {
   return new Promise((resolve, reject) => {
     worker.on('disconnect', () => {
       resolve();
-      reject();
     });
   });
 };

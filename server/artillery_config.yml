@@ -1,0 +1,11 @@
+config:
+  target: 'http://localhost:1127'
+  phases:
+    - duration: 60
+      arrivalRate: 20
+scenarios:
+  - flow:
+      - loop:
+          - get:
+              url: "/r/900/about"
+        count: 50
