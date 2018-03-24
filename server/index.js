@@ -16,6 +16,12 @@ app.use(express.static(__dirname + '/../client/dist'));
 app.use('/r', router);
 //all requests will be sent to the router to be directed to the correct endpoints
 
+app.get('*.js', (req, res, next) => {
+  req.url = req.url + '.gz';
+  res.set('Content-Encoding', 'gzip');
+  next();
+});
+
 //handles endpoint errors
 app.get('*', (req, res) => {
   res.status(404).send('invalid endpoint');
