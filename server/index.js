@@ -4,9 +4,10 @@ const cors = require('cors');
 const router = require('./router.js');
 
 //importing database files so tests with the http requests can be ran 
-const db = require('../database/index.js');
+const db = require('../database/index.js').db;
 
-let app = express();
+const app = express();
+
 
 app.use(cors());
 

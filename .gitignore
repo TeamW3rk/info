@@ -3,4 +3,4 @@ client/dist/bundle.js
 client/dist/bundle.js.gz
 coverage
 license_key.js
-
+newrelic_agent.log

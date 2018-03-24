@@ -5,8 +5,7 @@ config:
       arrivalRate: 20
 scenarios:
   - flow:
-      - 
-      loop:
+      - loop:
           - get:
               url: "/r/900/about"
         count: 50

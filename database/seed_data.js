@@ -59,7 +59,7 @@ if (cluster.isMaster) {
 
   Promise.all(workerPromises).then( async () => {
     const client = await createIndexes();
-    console.log((new Date() - startTime) / 1000 /60 + ' minutes');
+    console.log((new Date() - startTime) / 1000 / 60 + ' minutes');
     client.close();
   });
 
