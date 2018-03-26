@@ -21,7 +21,7 @@ router.get(`/:restaurant_id/about`, cacheMethod, (req, res) => {
   const id = req.params.restaurant_id;
   db(id, (item, err) => {
     if (err) throw err;
-    cache.setex(id, 6000, JSON.stringify(item[0]));
+    cache.setex(id, 60, JSON.stringify(item[0]));
     res.send(item[0]);
   });
 });

@@ -4,7 +4,7 @@ const dataGenerator = require('./dataGenerator.js');
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/restaurants');
 
-const redisClient = redis.createClient(6379)
+const redisClient = redis.createClient(6379);
 
 let informationSchema = mongoose.Schema({
   restaurant_id: Number,
