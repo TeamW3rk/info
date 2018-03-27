@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import bluebird from 'bluebird';
+import PropTypes from 'prop-types';
 import Description from './components/Description.jsx';
 import LeftAbout from './components/LeftAbout.jsx'
 import Maps from './components/Map.jsx';
@@ -15,8 +16,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      restaurant: {}, 
-      isLoading: true,
+      restaurant: this.props.info, 
+      isLoading: this.props.isLoading,
       readmore: false //readmore button not toggled
     };
   }
@@ -29,7 +30,6 @@ class App extends React.Component {
   getInformation(restaurant_id) {
     axios.get(`http://127.0.0.1:1127/r/${restaurant_id}/about`)
     .then((response) => {
-      console.log(response);
       this.setState({
         restaurant: response.data,
         isLoading: false, 
@@ -102,6 +102,8 @@ class App extends React.Component {
   }
 }
 
-const restaurantId = window.location.href.slice(window.location.href.search('r') + 2).replace('/', '');
-export default ReactDOM.render(<App restaurantId={restaurantId}/>, document.getElementById('app'));
-window.App = App;
+App.defaultProps = {
+  isLoading: false,
+};
+
+export default App;

@@ -3,7 +3,7 @@ const { db, cache } = require('../database/index.js');
 
 const router = express.Router();
 
-router.use('/:restaurant_id/', express.static(__dirname + '/../client/dist'));
+router.use('/:restaurant_id/', express.static(__dirname + '/../public/dist'));
 
 const cacheMethod = (req, res, next) => {
   const id = req.params.restaurant_id;
