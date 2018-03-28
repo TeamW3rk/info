@@ -16,7 +16,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      restaurant: this.props.info, 
+      restaurant: this.props.restaurant, 
       isLoading: this.props.isLoading,
       readmore: false //readmore button not toggled
     };
@@ -42,7 +42,7 @@ class App extends React.Component {
   
   //use native Component Will Mount to invoke the randomSearch function above before rendering
   componentWillMount() {
-    this.fetch();
+    // this.fetch();
   }
 
   //will rerender the description when clicked

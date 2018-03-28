@@ -11,17 +11,19 @@ const app = express();
 
 app.use(cors());
 
+app.get('/bundle.js', function (req, res, next) {
+  req.url = req.url + '.gz';
+  res.set('Content-Encoding', 'gzip');
+  next();
+});
+
 app.use(express.static(__dirname + '/../public/dist'));
 
 //using the defined router 
 app.use('/r', router);
 //all requests will be sent to the router to be directed to the correct endpoints
 
-app.get('*.js', (req, res, next) => {
-  req.url = req.url + '.gz';
-  res.set('Content-Encoding', 'gzip');
-  next();
-});
+
 
 //handles endpoint errors
 app.get('*', (req, res) => {

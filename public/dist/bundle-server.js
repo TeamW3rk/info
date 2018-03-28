@@ -2260,7 +2260,7 @@ var App = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
     _this.state = {
-      restaurant: _this.props.info,
+      restaurant: _this.props.restaurant,
       isLoading: _this.props.isLoading,
       readmore: false //readmore button not toggled
     };
@@ -2294,9 +2294,9 @@ var App = function (_React$Component) {
 
   }, {
     key: 'componentWillMount',
-    value: function componentWillMount() {
-      this.fetch();
-    }
+    value: function componentWillMount() {}
+    // this.fetch();
+
 
     //will rerender the description when clicked
 
