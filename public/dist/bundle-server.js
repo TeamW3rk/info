@@ -2243,6 +2243,10 @@ var _jquery = __webpack_require__(110);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
+var _config = __webpack_require__(112);
+
+var _config2 = _interopRequireDefault(_config);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2259,9 +2263,15 @@ var App = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
+    var isLoading = void 0;
+    if (_this.props.restaurant === undefined) {
+      isLoading = true;
+    } else {
+      isLoading = false;
+    }
     _this.state = {
-      restaurant: _this.props.restaurant,
-      isLoading: _this.props.isLoading,
+      restaurant: _this.props.restaurant || [],
+      isLoading: isLoading,
       readmore: false //readmore button not toggled
     };
     return _this;
@@ -2269,8 +2279,8 @@ var App = function (_React$Component) {
 
   _createClass(App, [{
     key: 'fetch',
-    value: function fetch() {
-      this.getInformation(this.props.restaurantId);
+    value: function fetch(id) {
+      this.getInformation(id);
     }
 
     //send GET request to get the about information for the restaurant 
@@ -2280,7 +2290,7 @@ var App = function (_React$Component) {
     value: function getInformation(restaurant_id) {
       var _this2 = this;
 
-      _axios2.default.get('http://127.0.0.1:1127/r/' + restaurant_id + '/about').then(function (response) {
+      _axios2.default.get('http://' + _config2.default.url + ':' + _config2.default.port + '/r/' + restaurant_id + '/about').then(function (response) {
         _this2.setState({
           restaurant: response.data,
           isLoading: false
@@ -2294,9 +2304,9 @@ var App = function (_React$Component) {
 
   }, {
     key: 'componentWillMount',
-    value: function componentWillMount() {}
-    // this.fetch();
-
+    value: function componentWillMount() {
+      this.fetch(this.props.id);
+    }
 
     //will rerender the description when clicked
 
@@ -21080,6 +21090,19 @@ if ( !noGlobal ) {
 return jQuery;
 } );
 
+
+/***/ }),
+/* 111 */,
+/* 112 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = {
+  url: 'localhost',
+  port: '1127'
+};
 
 /***/ })
 /******/ ]);

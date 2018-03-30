@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 const redis = require('redis');
 const dataGenerator = require('./dataGenerator.js');
+const config = require('../config.js');
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/restaurants');
+mongoose.connect(`mongodb://${config.url}/restaurants`);
 
 const redisClient = redis.createClient(6379);
 

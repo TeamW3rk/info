@@ -11,24 +11,31 @@ import RightAbout from './components/RightAbout.jsx';
 import Title from './components/Title.jsx';
 import TopTags from './components/TopTags.jsx';
 import $ from 'jquery';
+import config from '../../config.js';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
+    let isLoading;
+    if(this.props.restaurant === undefined) {
+      isLoading = true;
+    } else {
+      isLoading = false;
+    }
     this.state = {
-      restaurant: this.props.restaurant, 
-      isLoading: this.props.isLoading,
+      restaurant: this.props.restaurant || [], 
+      isLoading: isLoading,
       readmore: false //readmore button not toggled
     };
   }
 
-  fetch() {
-    this.getInformation(this.props.restaurantId);
+  fetch(id) {
+    this.getInformation(id);
   }
 
   //send GET request to get the about information for the restaurant 
   getInformation(restaurant_id) {
-    axios.get(`http://127.0.0.1:1127/r/${restaurant_id}/about`)
+    axios.get(`http://${config.url}:${config.port}/r/${restaurant_id}/about`)
     .then((response) => {
       this.setState({
         restaurant: response.data,
@@ -42,7 +49,7 @@ class App extends React.Component {
   
   //use native Component Will Mount to invoke the randomSearch function above before rendering
   componentWillMount() {
-    // this.fetch();
+      this.fetch(this.props.id);
   }
 
   //will rerender the description when clicked

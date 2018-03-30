@@ -6,7 +6,14 @@ import axios from 'axios';
 const element = document.getElementById('info');
 const initState = JSON.parse(element.getAttribute('data-info'))
 
-ReactDOM.hydrate(<Info {...initState}/>, element);
+if(initState) {
+  ReactDOM.hydrate(<Info {...initState}/>, element);
+} else {
+  const restaurantId = window.location.href.slice(window.location.href.search('r') + 2).replace('/', '');
+  ReactDOM.render(<Info id={restaurantId}/>, element);
+}
+
+
 
 
 
