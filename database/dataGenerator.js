@@ -1,5 +1,4 @@
 const faker = require('faker');
-const mongoose = require('mongoose');
 
 //create ID counter
 let idCount = 1;
@@ -85,74 +84,65 @@ let eveningTime = () => {
   return `${12}pm - ${maxTime}pm`;
 }
 
-//function to create mock data. Will make 200 instances of the same schema and insert it into the database
-//generate the actual data
-let generateMockData = () => {
-  //data capsule
-  let data = [];
-  for (let i = 0; i < 200; i++) {
-    data.push({
-      restaurant_id: idCount,
-      name: faker.company.companyName(),
-      latitude: latitude(),
-      longitude: longitude(),
-      map: map(),
-      diningStyle: faker.lorem.word(),
-      cuisines: faker.lorem.word(),
-      hoursOfOperations: {
-       monday: {
-         served : true,
-         lunch: morningTime(),
-         dinner: eveningTime()
-       },
-       friday: {
-         Served: true, 
-         lunch: morningTime(),
-         dinner: eveningTime()
-       },
-       saturday: {
-         served : true,
-         lunch: morningTime(),
-         dinner: eveningTime()
-       }
-      }, 
-      crossStreet: faker.lorem.sentence(),
-      dressCode: faker.lorem.sentence(),
-      priceRange: priceRange(),
-      paymentOptions: {
-        visa: true,
-        master: true,
-        amex: true,
-        discover: true
-      },
-      phoneNumber: phoneNumber() ,
-      website: `${faker.lorem.word()}.com`,
-      catering: {
-        cater: true,
-        description: faker.lorem.paragraph()
-      },
-      publicTransit: faker.lorem.sentence(),
-      executiveChef: faker.name.firstName(),
-      additional: {
-        chef: true, 
-        description: faker.lorem.paragraph()
-      },
-      specialEvents: faker.lorem.paragraph(), 
-      promotions: faker.lorem.paragraph(),
-      rating: ratings(),
-      reviews: reviews(),
-      topTags: topTags(),
-      description: faker.lorem.paragraph() + faker.lorem.paragraph(),
-      neighborhood: faker.lorem.words(),
-      parking: faker.lorem.sentence()
-    });
-    idCount++;
-  }
-  return data;
-};
+const generateSingleData = (idCount) => {
+  const obj = {
+    restaurant_id: idCount,
+    name: faker.company.companyName(),
+    latitude: latitude(),
+    longitude: longitude(),
+    map: map(),
+    diningStyle: faker.lorem.word(),
+    cuisines: faker.lorem.word(),
+    hoursOfOperations: {
+     monday: {
+       served : true,
+       lunch: morningTime(),
+       dinner: eveningTime()
+     },
+     friday: {
+       Served: true, 
+       lunch: morningTime(),
+       dinner: eveningTime()
+     },
+     saturday: {
+       served : true,
+       lunch: morningTime(),
+       dinner: eveningTime()
+     }
+    }, 
+    crossStreet: faker.lorem.sentence(),
+    dressCode: faker.lorem.sentence(),
+    priceRange: priceRange(),
+    paymentOptions: {
+      visa: true,
+      master: true,
+      amex: true,
+      discover: true
+    },
+    phoneNumber: phoneNumber() ,
+    website: `${faker.lorem.word()}.com`,
+    catering: {
+      cater: true,
+      description: faker.lorem.paragraph()
+    },
+    publicTransit: faker.lorem.sentence(),
+    executiveChef: faker.name.firstName(),
+    additional: {
+      chef: true, 
+      description: faker.lorem.paragraph()
+    },
+    specialEvents: faker.lorem.paragraph(), 
+    promotions: faker.lorem.paragraph(),
+    rating: ratings(),
+    reviews: reviews(),
+    topTags: topTags(),
+    description: faker.lorem.paragraph() + faker.lorem.paragraph(),
+    neighborhood: faker.lorem.words(),
+    parking: faker.lorem.sentence()
+  };
+  return obj;
+}
 
-
-module.exports.generateMockData = generateMockData;
 module.exports.longitude = longitude;
 module.exports.latitude = latitude;
 module.exports.phoneNumber = phoneNumber;
@@ -163,3 +153,4 @@ module.exports.topTags = topTags;
 module.exports.map = map;
 module.exports.morningTime = morningTime;
 module.exports.eveningTime = eveningTime;
+module.exports.generateSingleData = generateSingleData;
